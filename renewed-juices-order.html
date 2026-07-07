@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renewed Juices — Order</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#620B15;
+    --red-deep:#4a0810;
+    --gold:#E1C36A;
+    --gold-soft:#eeddab;
+    --cream:#FBF3E4;
+    --ink:#2A1710;
+    --hair: rgba(98,11,21,0.16);
+    --hair-strong: rgba(98,11,21,0.28);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'EB Garamond', serif;
+    font-size:17px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:520px;margin:0 auto;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    background:var(--red);
+    padding:38px 28px 0;
+    overflow:hidden;
+    color:var(--cream);
+  }
+  .hero-inner{position:relative;z-index:2;}
+  .eyebrow{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:13px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 18px;
+  }
+  .eyebrow::before{content:"✦ ";}
+  h1.wordmark{
+    font-family:'Cinzel', serif;
+    font-weight:700;
+    font-size:38px;
+    letter-spacing:0.03em;
+    margin:0;
+    line-height:1.08;
+    color:var(--cream);
+  }
+  h1.wordmark em{
+    font-family:'Cinzel', serif;
+    font-style:normal;
+    font-weight:700;
+    color:var(--gold);
+  }
+  .tagline{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:16px;
+    color:var(--gold-soft);
+    margin:10px 0 26px;
+  }
+  .sun-arc{
+    position:absolute;
+    right:-70px;
+    bottom:-90px;
+    width:230px;
+    height:230px;
+    border-radius:50%;
+    background:var(--gold);
+    opacity:0.94;
+    z-index:1;
+  }
+  .sun-arc::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    background:radial-gradient(circle at 32% 30%, rgba(255,255,255,0.35), transparent 60%);
+  }
+  .status-strip{
+    position:relative;
+    z-index:2;
+    margin-top:6px;
+    background:rgba(251,243,228,0.08);
+    border:1px solid rgba(225,195,106,0.35);
+    border-radius:10px;
+    padding:14px 16px;
+    font-size:14.5px;
+    color:var(--cream);
+  }
+  .status-strip b{color:var(--gold);}
+  .status-strip .edit-note{
+    display:block;
+    margin-top:6px;
+    font-style:italic;
+    font-size:12.5px;
+    color:rgba(251,243,228,0.65);
+  }
+
+  /* sun-ray divider — signature element */
+  .rays{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:22px 0 10px;
+  }
+  .rays span{
+    display:block;
+    width:2px;
+    background:var(--gold);
+    border-radius:2px;
+    opacity:0.85;
+  }
+  .rays span:nth-child(1){height:6px;}
+  .rays span:nth-child(2){height:11px;}
+  .rays span:nth-child(3){height:16px;}
+  .rays span:nth-child(4){height:20px;background:var(--red);opacity:0.55;}
+  .rays span:nth-child(5){height:16px;}
+  .rays span:nth-child(6){height:11px;}
+  .rays span:nth-child(7){height:6px;}
+
+  /* ---------- Sections ---------- */
+  main{padding:6px 20px 40px;}
+  section.card{
+    background:#fff;
+    border:1px solid var(--hair);
+    border-radius:14px;
+    padding:22px 20px;
+    margin-bottom:22px;
+  }
+  .sec-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:16px;
+  }
+  .sec-badge{
+    width:34px;height:34px;flex:0 0 34px;
+    border-radius:50%;
+    background:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px;
+  }
+  .sec-title{
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    font-size:16px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--red);
+    margin:0;
+  }
+  .sec-sub{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:13.5px;
+    color:#7a5a45;
+    margin:-8px 0 14px;
+  }
+
+  label{
+    display:block;
+    font-family:'Cinzel', serif;
+    font-size:12px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--red);
+    margin:14px 0 6px;
+  }
+  label .opt{
+    text-transform:none;
+    font-family:'EB Garamond',serif;
+    font-style:italic;
+    color:#9a7d55;
+    letter-spacing:0;
+    font-size:12.5px;
+  }
+  input[type=text], input[type=tel], textarea{
+    width:100%;
+    font-family:'EB Garamond', serif;
+    font-size:16px;
+    padding:12px 13px;
+    border:1px solid var(--hair-strong);
+    border-radius:9px;
+    background:var(--cream);
+    color:var(--ink);
+  }
+  input:focus, textarea:focus{
+    outline:2px solid var(--gold);
+    outline-offset:1px;
+  }
+  textarea{resize:vertical;min-height:74px;}
+
+  /* Package tiles */
+  .pkg-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .pkg-tile{
+    border:1.5px solid var(--hair-strong);
+    border-radius:11px;
+    padding:14px 10px;
+    text-align:center;
+    cursor:pointer;
+  }
+  .pkg-tile.wide{grid-column:1 / -1;}
+  .pkg-tile.selected{
+    border-color:var(--red);
+    background:rgba(98,11,21,0.05);
+  }
+  .pkg-name{
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    font-size:14.5px;
+    color:var(--ink);
+  }
+  .pkg-count{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:12.5px;
+    color:#7a5a45;
+    margin:2px 0 8px;
+  }
+  .pkg-price{
+    font-family:'Cinzel', serif;
+    font-weight:700;
+    font-size:19px;
+    color:var(--red);
+  }
+  .pkg-perbottle{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:11.5px;
+    color:#9a7d55;
+    margin-top:2px;
+  }
+
+  .fill-note{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:13.5px;
+    color:var(--red);
+    background:rgba(225,195,106,0.18);
+    border:1px solid var(--hair);
+    border-radius:8px;
+    padding:9px 12px;
+    margin-bottom:14px;
+  }
+  .fill-note.done{color:#4a6b3f;background:rgba(74,107,63,0.08);}
+
+  /* Product rows */
+  .product{
+    border-bottom:1px solid var(--hair);
+    padding:16px 0;
+  }
+  .product:last-child{border-bottom:none;padding-bottom:2px;}
+  .product-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:10px;
+  }
+  .product-name{
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    font-size:15.5px;
+    letter-spacing:0.02em;
+    color:var(--ink);
+  }
+  .product-price{
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    font-size:14.5px;
+    color:var(--red);
+    white-space:nowrap;
+  }
+  .product-ing{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:14px;
+    color:#7a5a45;
+    margin:3px 0 12px;
+  }
+  .stepper{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .stepper button{
+    width:32px;height:32px;
+    border-radius:50%;
+    border:1.5px solid var(--red);
+    background:#fff;
+    color:var(--red);
+    font-family:'Cinzel', serif;
+    font-size:16px;
+    line-height:1;
+    cursor:pointer;
+  }
+  .stepper button:disabled{opacity:0.3;cursor:not-allowed;}
+  .stepper button:active:not(:disabled){background:var(--gold-soft);}
+  .stepper .qty{
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    font-size:15px;
+    min-width:18px;
+    text-align:center;
+  }
+
+  /* Summary */
+  .summary{
+    background:var(--red);
+    color:var(--cream);
+    border-radius:14px;
+    padding:20px 22px;
+    margin-bottom:22px;
+  }
+  .summary-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:14.5px;
+    padding:5px 0;
+    color:rgba(251,243,228,0.85);
+  }
+  .summary-row.total{
+    border-top:1px solid rgba(225,195,106,0.4);
+    margin-top:8px;
+    padding-top:12px;
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    font-size:17px;
+    color:var(--gold);
+  }
+  .summary-row b{color:var(--cream);}
+
+  /* Pickup — single spot */
+  .pickup-spot{
+    background:var(--cream);
+    border:1px solid var(--hair-strong);
+    border-radius:11px;
+    padding:16px;
+    margin-bottom:12px;
+  }
+  .pickup-spot .pt{
+    font-family:'Cinzel', serif;
+    font-size:15px;
+    font-weight:600;
+    color:var(--red);
+  }
+  .pickup-spot .ps{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:13.5px;
+    color:#7a5a45;
+    margin-top:3px;
+  }
+  .pay-option{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 4px;
+    border-bottom:1px solid var(--hair);
+    cursor:pointer;
+  }
+  .pay-option:last-child{border-bottom:none;}
+  .pay-dot{width:11px;height:11px;border-radius:50%;flex:0 0 11px;}
+  .pay-name{font-family:'Cinzel', serif;font-size:14.5px;font-weight:600;}
+  .pay-sub{font-family:'EB Garamond', serif;font-style:italic;font-size:13px;color:#7a5a45;}
+
+  .cta{
+    width:100%;
+    background:var(--red);
+    color:var(--gold);
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    font-size:15px;
+    padding:17px;
+    border:none;
+    border-radius:11px;
+    cursor:pointer;
+    margin-top:4px;
+  }
+  .cta:active{background:var(--red-deep);}
+  .cta:disabled{opacity:0.5;cursor:not-allowed;}
+  .foot-note{
+    text-align:center;
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:13px;
+    color:#8a6a52;
+    margin-top:14px;
+    padding:0 10px;
+  }
+
+  .verse{
+    text-align:center;
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:13.5px;
+    color:#9a7d55;
+    padding:6px 30px 30px;
+  }
+
+  /* Recap panel */
+  .recap-overlay{
+    display:none;
+    position:fixed;inset:0;
+    background:rgba(42,23,16,0.55);
+    z-index:50;
+    align-items:flex-end;
+    justify-content:center;
+  }
+  .recap-overlay.show{display:flex;}
+  .recap{
+    width:100%;
+    max-width:520px;
+    background:var(--cream);
+    border-radius:20px 20px 0 0;
+    padding:26px 24px 30px;
+    max-height:85vh;
+    overflow-y:auto;
+  }
+  .recap h2{
+    font-family:'Cinzel', serif;
+    color:var(--red);
+    font-size:18px;
+    letter-spacing:0.03em;
+    margin:0 0 4px;
+  }
+  .recap p.sub{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    color:#7a5a45;
+    font-size:14px;
+    margin:0 0 16px;
+  }
+  .recap-box{
+    background:#fff;
+    border:1px solid var(--hair);
+    border-radius:10px;
+    padding:16px;
+    font-size:14.5px;
+    white-space:pre-wrap;
+    font-family:'EB Garamond', serif;
+    margin-bottom:16px;
+  }
+  .recap-actions{display:flex;gap:10px;}
+  .recap-actions button{
+    flex:1;
+    font-family:'Cinzel', serif;
+    font-size:13.5px;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    padding:13px;
+    border-radius:9px;
+    cursor:pointer;
+  }
+  .btn-copy{background:var(--red);color:var(--gold);border:none;}
+  .btn-close{background:transparent;color:var(--red);border:1.5px solid var(--red);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Cold-Pressed &middot; Made to Order</p>
+    <h1 class="wordmark">Renewed <em>Juices</em></h1>
+    <p class="tagline">A return to what Nourishes &mdash; Knoxville, TN</p>
+    <div class="status-strip">
+      <div><b>Orders close every Thursday @ 6 PM.</b></div>
+      <div style="margin-top:6px;"><b>Next pop-up:</b> <span id="popupWhen">Add your date &amp; neighborhood here</span></div>
+      <span class="edit-note">Editable — swap this line for your real pop-up details each week</span>
+    </div>
+  </div>
+  <div class="sun-arc"></div>
+</div>
+
+<main class="wrap">
+
+  <div class="rays"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+  <!-- Your Info -->
+  <section class="card">
+    <div class="sec-head"><div class="sec-badge">🧾</div><h2 class="sec-title">Your Info</h2></div>
+    <label style="margin-top:0;">Full Name</label>
+    <input type="text" id="custName" placeholder="First and last name">
+    <label>Phone Number</label>
+    <input type="tel" id="custPhone" placeholder="(865) 555-0000">
+    <label>Instagram Handle <span class="opt">— optional, so we can tag you!</span></label>
+    <input type="text" id="custIG" placeholder="@yourhandle">
+  </section>
+
+  <!-- Package -->
+  <section class="card">
+    <div class="sec-head"><div class="sec-badge">🍋</div><h2 class="sec-title">Choose a Package</h2></div>
+    <p class="sec-sub">Mix and match any juice flavors</p>
+    <div class="pkg-grid">
+      <div class="pkg-tile" data-pkg="single" data-count="1" data-price="9">
+        <div class="pkg-name">Single</div>
+        <div class="pkg-count">1 bottle</div>
+        <div class="pkg-price">$9</div>
+      </div>
+      <div class="pkg-tile" data-pkg="three" data-count="3" data-price="24">
+        <div class="pkg-name">3-Pack</div>
+        <div class="pkg-count">3 bottles</div>
+        <div class="pkg-price">$24</div>
+        <div class="pkg-perbottle">$8/bottle</div>
+      </div>
+      <div class="pkg-tile wide" data-pkg="five" data-count="5" data-price="38">
+        <div class="pkg-name">5-Pack</div>
+        <div class="pkg-count">5 bottles</div>
+        <div class="pkg-price">$38</div>
+        <div class="pkg-perbottle">$7.60/bottle</div>
+      </div>
+    </div>
+    <p style="font-family:'EB Garamond',serif;font-style:italic;font-size:12px;color:#9a7d55;margin-top:10px;">Starter pricing — adjust anytime, this is just a suggested starting point.</p>
+  </section>
+
+  <!-- Flavors -->
+  <section class="card">
+    <div class="sec-head"><div class="sec-badge">🌿</div><h2 class="sec-title">Select Your Flavors</h2></div>
+    <div class="fill-note" id="fillNote">Please choose a package first.</div>
+    <div id="juiceList"></div>
+  </section>
+
+  <!-- Shots -->
+  <section class="card">
+    <div class="sec-head"><div class="sec-badge">💧</div><h2 class="sec-title">Add Wellness Shots</h2></div>
+    <p class="sec-sub">$5 each &middot; sold individually, no package needed</p>
+    <div id="shotList"></div>
+  </section>
+
+  <!-- Summary -->
+  <div class="summary" id="summaryBox">
+    <div class="summary-row"><span>Package</span><b id="sumPkg">None selected</b></div>
+    <div class="summary-row"><span>Shots</span><b id="sumShots">0</b></div>
+    <div class="summary-row"><span>Fulfillment</span><b>Pickup (Free)</b></div>
+    <div class="summary-row total"><span>Total due</span><span id="sumTotal">$0</span></div>
+  </div>
+
+  <!-- Pickup -->
+  <section class="card">
+    <div class="sec-head"><div class="sec-badge">📍</div><h2 class="sec-title">Pickup Details</h2></div>
+    <div class="pickup-spot">
+      <div class="pt">Downtown Knoxville</div>
+      <div class="ps">Sunday @ 4:30 PM &middot; exact address sent by text once your order is confirmed.</div>
+    </div>
+  </section>
+
+  <!-- Payment -->
+  <section class="card">
+    <div class="sec-head"><div class="sec-badge">💳</div><h2 class="sec-title">Payment Method</h2></div>
+    <div class="pay-option" data-pay="square"><div class="pay-dot" style="background:#3E4348;"></div><div><div class="pay-name">Square (Card / Tap to Pay)</div><div class="pay-sub">Charged at pickup</div></div></div>
+    <div class="pay-option" data-pay="cashapp"><div class="pay-dot" style="background:#00C244;"></div><div><div class="pay-name">Cash App</div><div class="pay-sub">$RenewedJuices</div></div></div>
+    <div class="pay-option" data-pay="applepay"><div class="pay-dot" style="background:#000;"></div><div><div class="pay-name">Apple Pay</div><div class="pay-sub">Sent request at pickup confirmation</div></div></div>
+  </section>
+
+  <!-- Notes -->
+  <section class="card">
+    <div class="sec-head"><div class="sec-badge">📝</div><h2 class="sec-title">Allergies &amp; Special Requests</h2></div>
+    <textarea id="custNotes" placeholder="Mention any allergies, substitutions, or other instructions..."></textarea>
+  </section>
+
+  <button class="cta" id="completeBtn" disabled>Complete Order →</button>
+  <p class="foot-note">Payment confirms your order. You'll receive a text with your pickup location and time.</p>
+  <p class="verse">"Behold, I have given you every plant yielding seed..." — Genesis 1:29</p>
+
+</main>
+
+<!-- Recap overlay -->
+<div class="recap-overlay" id="recapOverlay">
+  <div class="recap">
+    <h2>Order Ready</h2>
+    <p class="sub">Copy this and send it with your payment to confirm.</p>
+    <div class="recap-box" id="recapText"></div>
+    <div class="recap-actions">
+      <button class="btn-close" id="recapClose">Edit Order</button>
+      <button class="btn-copy" id="recapCopy">Copy Order</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const JUICES = [
+  {id:'restore', name:'Restore', ing:'Pineapple · Kale · Apple · Coconut Water · Ginger'},
+  {id:'rush', name:'Rush', ing:'Beet · Honeycrisp Apple · Lemon'},
+  {id:'radiance', name:'Radiance', ing:'Mandarin · Carrot · Ginger — "The Glow Elixir"'},
+];
+const SHOTS = [
+  {id:'rise', name:'Rise', ing:'Pineapple · Turmeric · Ginger · Black Pepper', price:5},
+  {id:'pulse', name:'Pulse', ing:'Beet · Lemon · Ginger', price:5},
+];
+const PACKAGES = {
+  single:{label:'Single', count:1, price:9},
+  three:{label:'3-Pack', count:3, price:24},
+  five:{label:'5-Pack', count:5, price:38},
+};
+
+const state = { pkg:null, juiceQty:{}, shotQty:{}, day:'Sunday @ 4:30 PM — Downtown Knoxville', pay:null };
+JUICES.forEach(j => state.juiceQty[j.id] = 0);
+SHOTS.forEach(s => state.shotQty[s.id] = 0);
+
+// package tiles
+document.querySelectorAll('.pkg-tile').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('.pkg-tile').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    state.pkg = el.dataset.pkg;
+    JUICES.forEach(j => state.juiceQty[j.id] = 0);
+    renderJuices();
+    updateSummary();
+  });
+});
+
+const juiceListEl = document.getElementById('juiceList');
+function renderJuices(){
+  juiceListEl.innerHTML = '';
+  const pkg = state.pkg ? PACKAGES[state.pkg] : null;
+  const chosen = JUICES.reduce((s,j)=>s+state.juiceQty[j.id],0);
+  JUICES.forEach(j => {
+    const row = document.createElement('div');
+    row.className = 'product';
+    const disabled = !pkg;
+    row.innerHTML = `
+      <div class="product-top">
+        <span class="product-name">${j.name}</span>
+      </div>
+      <div class="product-ing">${j.ing}</div>
+      <div class="stepper">
+        <button type="button" data-act="minus" data-id="${j.id}" ${disabled?'disabled':''}>−</button>
+        <span class="qty" id="qty-${j.id}">${state.juiceQty[j.id]}</span>
+        <button type="button" data-act="plus" data-id="${j.id}" ${disabled?'disabled':''}>+</button>
+      </div>`;
+    juiceListEl.appendChild(row);
+  });
+  const note = document.getElementById('fillNote');
+  if(!pkg){
+    note.textContent = 'Please choose a package first.';
+    note.classList.remove('done');
+  } else if(chosen < pkg.count){
+    note.textContent = `Choose ${pkg.count - chosen} more to fill your ${pkg.label}.`;
+    note.classList.remove('done');
+  } else {
+    note.textContent = `Your ${pkg.label} is filled! ✓`;
+    note.classList.add('done');
+  }
+  updatePlusDisabled();
+}
+
+function updatePlusDisabled(){
+  const pkg = state.pkg ? PACKAGES[state.pkg] : null;
+  if(!pkg) return;
+  const chosen = JUICES.reduce((s,j)=>s+state.juiceQty[j.id],0);
+  document.querySelectorAll('#juiceList button[data-act="plus"]').forEach(btn => {
+    btn.disabled = chosen >= pkg.count;
+  });
+}
+
+juiceListEl.addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if(!btn || btn.disabled) return;
+  const id = btn.dataset.id;
+  const pkg = PACKAGES[state.pkg];
+  const chosen = JUICES.reduce((s,j)=>s+state.juiceQty[j.id],0);
+  if(btn.dataset.act === 'plus' && chosen < pkg.count) state.juiceQty[id]++;
+  if(btn.dataset.act === 'minus') state.juiceQty[id] = Math.max(0, state.juiceQty[id]-1);
+  renderJuices();
+  updateSummary();
+});
+
+const shotListEl = document.getElementById('shotList');
+SHOTS.forEach(s => {
+  const row = document.createElement('div');
+  row.className = 'product';
+  row.innerHTML = `
+    <div class="product-top">
+      <span class="product-name">${s.name} Shot</span>
+      <span class="product-price">$${s.price}</span>
+    </div>
+    <div class="product-ing">${s.ing}</div>
+    <div class="stepper">
+      <button type="button" data-act="minus" data-id="${s.id}">−</button>
+      <span class="qty" id="sqty-${s.id}">0</span>
+      <button type="button" data-act="plus" data-id="${s.id}">+</button>
+    </div>`;
+  shotListEl.appendChild(row);
+});
+shotListEl.addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  const id = btn.dataset.id;
+  if(btn.dataset.act === 'plus') state.shotQty[id]++;
+  if(btn.dataset.act === 'minus') state.shotQty[id] = Math.max(0, state.shotQty[id]-1);
+  document.getElementById('sqty-'+id).textContent = state.shotQty[id];
+  updateSummary();
+});
+
+document.querySelectorAll('.pay-option').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('.pay-option').forEach(o => o.style.background='transparent');
+    el.style.background = 'rgba(225,195,106,0.15)';
+    state.pay = el.querySelector('.pay-name').textContent;
+  });
+});
+
+function updateSummary(){
+  const pkg = state.pkg ? PACKAGES[state.pkg] : null;
+  const chosen = JUICES.reduce((s,j)=>s+state.juiceQty[j.id],0);
+  const shotsCount = SHOTS.reduce((s,x)=>s+state.shotQty[x.id],0);
+  const shotsTotal = SHOTS.reduce((s,x)=>s+state.shotQty[x.id]*x.price,0);
+  const pkgFilled = pkg && chosen === pkg.count;
+  document.getElementById('sumPkg').textContent = pkg ? (pkgFilled ? pkg.label+' — filled' : pkg.label+' — '+ (pkg.count-chosen) +' left') : 'None selected';
+  document.getElementById('sumShots').textContent = shotsCount;
+  const total = (pkgFilled ? pkg.price : 0) + shotsTotal;
+  document.getElementById('sumTotal').textContent = '$'+total;
+  document.getElementById('completeBtn').disabled = !(pkgFilled || shotsCount>0);
+}
+updateSummary();
+
+document.getElementById('completeBtn').addEventListener('click', () => {
+  const name = document.getElementById('custName').value.trim() || '[name not entered]';
+  const phone = document.getElementById('custPhone').value.trim() || '[phone not entered]';
+  const ig = document.getElementById('custIG').value.trim();
+  const notes = document.getElementById('custNotes').value.trim();
+  const pkg = state.pkg ? PACKAGES[state.pkg] : null;
+  const chosen = JUICES.reduce((s,j)=>s+state.juiceQty[j.id],0);
+  const pkgFilled = pkg && chosen === pkg.count;
+
+  let lines = [];
+  lines.push('RENEWED JUICES — ORDER');
+  lines.push('Name: '+name);
+  lines.push('Phone: '+phone);
+  if(ig) lines.push('IG: '+ig);
+  lines.push('');
+  if(pkgFilled){
+    lines.push(pkg.label+' ($'+pkg.price+')');
+    JUICES.forEach(j => { if(state.juiceQty[j.id]>0) lines.push('  '+state.juiceQty[j.id]+'x '+j.name); });
+  }
+  SHOTS.forEach(s => { if(state.shotQty[s.id]>0) lines.push(state.shotQty[s.id]+'x '+s.name+' Shot — $'+(state.shotQty[s.id]*s.price)); });
+  lines.push('');
+  lines.push('Pickup Day: '+(state.day || '[not selected]'));
+  lines.push('Payment: '+(state.pay || '[not selected]'));
+  if(notes) lines.push('Notes: '+notes);
+  lines.push('');
+  const shotsTotal = SHOTS.reduce((s,x)=>s+state.shotQty[x.id]*x.price,0);
+  const total = (pkgFilled ? pkg.price : 0) + shotsTotal;
+  lines.push('TOTAL: $'+total);
+  document.getElementById('recapText').textContent = lines.join('\n');
+  document.getElementById('recapOverlay').classList.add('show');
+});
+
+document.getElementById('recapClose').addEventListener('click', () => {
+  document.getElementById('recapOverlay').classList.remove('show');
+});
+
+document.getElementById('recapCopy').addEventListener('click', () => {
+  const text = document.getElementById('recapText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('recapCopy');
+    const orig = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    setTimeout(()=> btn.textContent = orig, 1600);
+  });
+});
+
+renderJuices();
+</script>
+
+</body>
+</html>
