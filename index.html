@@ -596,6 +596,18 @@
 </div>
 
 <script>
+const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxT7GuJlJAkEJDMCi7RfeeCSrFZ78uHodEQ5qAsj2DPxV0sbguhL0MR85GTndq2jec/exec';
+
+function submitOrderToSheet(payload){
+  const body = new URLSearchParams();
+  Object.keys(payload).forEach(k => body.append(k, payload[k] ?? ''));
+  fetch(SHEET_ENDPOINT, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: body
+  }).catch(err => console.error('Order log failed:', err));
+}
+
 const JUICES = [
   {id:'restore', name:'Restore', ing:'Pineapple · Kale · Apple · Coconut Water · Ginger'},
   {id:'rush', name:'Rush', ing:'Beet · Honeycrisp Apple · Lemon'},
@@ -747,11 +759,14 @@ document.getElementById('completeBtn').addEventListener('click', () => {
   lines.push('Phone: '+phone);
   if(ig) lines.push('IG: '+ig);
   lines.push('');
+
+  let orderItems = [];
   if(pkgFilled){
     lines.push(pkg.label+' ($'+pkg.price+')');
-    JUICES.forEach(j => { if(state.juiceQty[j.id]>0) lines.push('  '+state.juiceQty[j.id]+'x '+j.name); });
+    orderItems.push(pkg.label+' ($'+pkg.price+')');
+    JUICES.forEach(j => { if(state.juiceQty[j.id]>0){ lines.push('  '+state.juiceQty[j.id]+'x '+j.name); orderItems.push(state.juiceQty[j.id]+'x '+j.name); } });
   }
-  SHOTS.forEach(s => { if(state.shotQty[s.id]>0) lines.push(state.shotQty[s.id]+'x '+s.name+' Shot — $'+(state.shotQty[s.id]*s.price)); });
+  SHOTS.forEach(s => { if(state.shotQty[s.id]>0){ lines.push(state.shotQty[s.id]+'x '+s.name+' Shot — $'+(state.shotQty[s.id]*s.price)); orderItems.push(state.shotQty[s.id]+'x '+s.name+' Shot'); } });
   lines.push('');
   lines.push('Pickup Day: '+(state.day || '[not selected]'));
   lines.push('Payment: '+(state.pay || '[not selected]'));
@@ -762,6 +777,18 @@ document.getElementById('completeBtn').addEventListener('click', () => {
   lines.push('TOTAL: $'+total);
   document.getElementById('recapText').textContent = lines.join('\n');
   document.getElementById('recapOverlay').classList.add('show');
+
+  submitOrderToSheet({
+    name: name,
+    phone: phone,
+    instagram: ig,
+    order: orderItems.join(', '),
+    total: '$'+total,
+    pickupDay: state.day || '',
+    payment: state.pay || '',
+    allergy: '',
+    notes: notes
+  });
 });
 
 document.getElementById('recapClose').addEventListener('click', () => {
