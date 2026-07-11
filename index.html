@@ -585,12 +585,11 @@
 <!-- Recap overlay -->
 <div class="recap-overlay" id="recapOverlay">
   <div class="recap">
-    <h2>Order Ready</h2>
-    <p class="sub">Copy this and send it with your payment to confirm.</p>
+    <h2>Thank You!</h2>
+    <p class="sub">Thank you for choosing Renewed Juices — we'll text you your pickup details soon.</p>
     <div class="recap-box" id="recapText"></div>
     <div class="recap-actions">
-      <button class="btn-close" id="recapClose">Edit Order</button>
-      <button class="btn-copy" id="recapCopy">Copy Order</button>
+      <button class="btn-copy" id="recapClose" style="flex:1;">Done</button>
     </div>
   </div>
 </div>
@@ -793,16 +792,6 @@ document.getElementById('completeBtn').addEventListener('click', () => {
 
 document.getElementById('recapClose').addEventListener('click', () => {
   document.getElementById('recapOverlay').classList.remove('show');
-});
-
-document.getElementById('recapCopy').addEventListener('click', () => {
-  const text = document.getElementById('recapText').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('recapCopy');
-    const orig = btn.textContent;
-    btn.textContent = 'Copied ✓';
-    setTimeout(()=> btn.textContent = orig, 1600);
-  });
 });
 
 renderJuices();
