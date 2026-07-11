@@ -92,7 +92,7 @@
     position:relative;
     z-index:2;
     margin-top:6px;
-    background:rgba(251,243,228,0.08);
+    background:var(--red-deep);
     border:1px solid rgba(225,195,106,0.35);
     border-radius:10px;
     padding:14px 16px;
@@ -483,8 +483,7 @@
     <p class="tagline">A return to what Nourishes &mdash; Knoxville, TN</p>
     <div class="status-strip">
       <div><b>Orders close every Thursday @ 6 PM.</b></div>
-      <div style="margin-top:6px;"><b>Next pop-up:</b> <span id="popupWhen">Add your date &amp; neighborhood here</span></div>
-      <span class="edit-note">Editable — swap this line for your real pop-up details each week</span>
+      <div style="margin-top:6px;"><b>Pop ups:</b> <span id="popupWhen">Across All Boundaries Christian Church every 1st Sunday</span></div>
     </div>
   </div>
   <div class="sun-arc"></div>
@@ -510,10 +509,10 @@
     <div class="sec-head"><div class="sec-badge">🍋</div><h2 class="sec-title">Choose a Package</h2></div>
     <p class="sec-sub">Mix and match any juice flavors</p>
     <div class="pkg-grid">
-      <div class="pkg-tile" data-pkg="single" data-count="1" data-price="9">
+      <div class="pkg-tile" data-pkg="single" data-count="1" data-price="8">
         <div class="pkg-name">Single</div>
         <div class="pkg-count">1 bottle</div>
-        <div class="pkg-price">$9</div>
+        <div class="pkg-price">$8</div>
       </div>
       <div class="pkg-tile" data-pkg="three" data-count="3" data-price="24">
         <div class="pkg-name">3-Pack</div>
@@ -521,11 +520,11 @@
         <div class="pkg-price">$24</div>
         <div class="pkg-perbottle">$8/bottle</div>
       </div>
-      <div class="pkg-tile wide" data-pkg="five" data-count="5" data-price="38">
+      <div class="pkg-tile wide" data-pkg="five" data-count="5" data-price="40">
         <div class="pkg-name">5-Pack</div>
         <div class="pkg-count">5 bottles</div>
-        <div class="pkg-price">$38</div>
-        <div class="pkg-perbottle">$7.60/bottle</div>
+        <div class="pkg-price">$40</div>
+        <div class="pkg-perbottle">$8/bottle</div>
       </div>
     </div>
     <p style="font-family:'EB Garamond',serif;font-style:italic;font-size:12px;color:#9a7d55;margin-top:10px;">Starter pricing — adjust anytime, this is just a suggested starting point.</p>
@@ -578,6 +577,7 @@
 
   <button class="cta" id="completeBtn" disabled>Complete Order →</button>
   <p class="foot-note">Payment confirms your order. You'll receive a text with your pickup location and time.</p>
+  <p class="fill-note" style="margin-top:14px;text-align:center;">🎥 Record a quick tasting review at pickup and get a FREE $5 wellness shot on your next order!</p>
   <p class="verse">"Behold, I have given you every plant yielding seed..." — Genesis 1:29</p>
 
 </main>
@@ -617,9 +617,9 @@ const SHOTS = [
   {id:'pulse', name:'Pulse', ing:'Beet · Lemon · Ginger', price:5},
 ];
 const PACKAGES = {
-  single:{label:'Single', count:1, price:9},
+  single:{label:'Single', count:1, price:8},
   three:{label:'3-Pack', count:3, price:24},
-  five:{label:'5-Pack', count:5, price:38},
+  five:{label:'5-Pack', count:5, price:40},
 };
 
 const state = { pkg:null, juiceQty:{}, shotQty:{}, day:'Sunday @ 4:30 PM — Downtown Knoxville', pay:null };
