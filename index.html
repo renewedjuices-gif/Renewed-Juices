@@ -280,7 +280,15 @@
     letter-spacing:0.02em;
     color:var(--ink);
   }
-  .kid-badge{
+    .shot-deal{background:var(--red);color:var(--cream);border:2px solid var(--gold);border-radius:12px;padding:14px 12px;margin:4px 0 16px;text-align:center}
+  .shot-deal-title{font-family:'Cinzel',serif;font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+  .shot-deal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 8px}
+  .shot-deal-tile{background:var(--cream);color:var(--red);border-radius:9px;padding:10px 6px}
+  .sd-count{display:block;font-family:'Cinzel',serif;font-weight:600;font-size:13px;color:var(--ink)}
+  .sd-price{display:block;font-family:'Cinzel',serif;font-weight:700;font-size:24px;color:var(--red)}
+  .shot-deal-sub{font-family:'EB Garamond',serif;font-style:italic;font-size:14px;color:var(--gold-soft)}
+  .limited-note{margin:8px 0 2px;font-family:'EB Garamond',serif;font-style:italic;font-size:15px;color:#620B15;background:#eeddab;border-left:3px solid #620B15;padding:6px 10px;border-radius:4px}
+.kid-badge{
     font-family:'Cinzel', serif;
     font-size:10px;
     font-weight:600;
@@ -528,7 +536,7 @@
   <!-- Package -->
   <section class="card">
     <div class="sec-head"><div class="sec-badge">🍋</div><h2 class="sec-title">Choose a Package</h2></div>
-    <p class="sec-sub">8 oz flask bottle &middot; mix and match any juice flavors</p>
+    <p class="sec-sub">8 oz flask bottle &middot; mix and match any juice flavors (Sample Pack is 4 oz)</p>
     <p style="font-family:'EB Garamond', serif; font-style:italic; font-size:12.5px; color:#9a7d55; margin:-8px 0 14px;">Cold-pressed with no preservatives — best enjoyed within 3 days, keep refrigerated, or freeze up to 6 months.</p>
     <div class="pkg-grid">
       <div class="pkg-tile" data-pkg="single" data-count="1" data-price="8">
@@ -547,6 +555,12 @@
         <div class="pkg-count">5 bottles</div>
         <div class="pkg-price">$38</div>
         <div class="pkg-perbottle">$7.60/bottle</div>
+      </div>
+      <div class="pkg-tile wide" data-pkg="sample" data-count="3" data-price="8.25">
+        <div class="pkg-name">Renewed Sample Pack</div>
+        <div class="pkg-count">3 &times; 4 oz juices</div>
+        <div class="pkg-price">$8.25</div>
+        <div class="pkg-perbottle">Can&rsquo;t decide? Choose any three 4 oz juices from the current lineup and find your favorite.</div>
       </div>
     </div>
   </section>
@@ -567,7 +581,15 @@
   <!-- Shots -->
   <section class="card">
     <div class="sec-head"><div class="sec-badge">💧</div><h2 class="sec-title">Add Wellness Shots</h2></div>
-    <p class="sec-sub">$5 each &middot; sold individually, no package needed</p>
+    <p class="sec-sub">$5 each</p>
+    <div class="shot-deal">
+      <div class="shot-deal-title">Shot Bundles &mdash; Save More</div>
+      <div class="shot-deal-grid">
+        <div class="shot-deal-tile"><span class="sd-count">4 shots</span><span class="sd-price">$18</span></div>
+        <div class="shot-deal-tile"><span class="sd-count">7 shots</span><span class="sd-price">$31</span></div>
+      </div>
+      <div class="shot-deal-sub">Mix &amp; match Rise and Pulse &mdash; savings apply automatically.</div>
+    </div>
     <div id="shotList"></div>
   </section>
 
@@ -633,25 +655,38 @@
 
 <script>
 const JUICES = [
-  {id:'rush', name:'Rush', desc:'Crafted to support circulation and natural energy.', ing:'Beet · Honeycrisp Apple · Lemon'},
-  {id:'radiance', name:'Radiance', desc:'A vibrant blend of carrot, mandarin, apple, and ginger, rich in beta-carotene to support healthy skin, eye health, and a natural glow.', ing:'Carrot · Mandarin · Apple · Ginger'},
-  {id:'sweetroot', name:'Sweet Root', desc:'Warm, earthy sweet potato meets crisp apple with a squeeze of lime and a touch of pumpkin spice, fall in a bottle.', ing:'Apple · Sweet Potato · Lime · Pumpkin Spice'},
+  {id:'rush', name:'Rush', badge:'Circulation', desc:'A sweet beet juice crafted to support circulation and natural energy.', ing:'Beet · Honeycrisp Apple · Lemon'},
+  {id:'radiance', name:'Radiance', badge:'Skin', desc:'A vibrant blend of carrot, mandarin, apple, and ginger, rich in beta-carotene to support healthy skin, eye health, and a natural glow.', ing:'Carrot · Mandarin · Apple · Ginger'},
+  {id:'sweetroot', name:'Sweet Root', badge:'Kid Favorite', desc:'Warm, earthy sweet potato meets crisp apple with a squeeze of lime and a touch of pumpkin spice, fall in a bottle.', ing:'Apple · Sweet Potato · Lime · Pumpkin Spice'},
   {id:'nectar', name:'Nectar', badge:'Kid Favorite', desc:'Crisp celery meets apple and grape for a refreshing, hydrating boost.', ing:'Celery · Apple · Grapes'},
-  {id:'revive', name:'Revive', desc:'A light, crisp green juice built on hydrating cucumber and celery. Apple and parsley round it out, with just a touch of lime for brightness.', ing:'Celery · Apple · Parsley · Cucumber · Lime'},
+  {id:'revive', name:'Revive', badge:'Hydration', desc:'A light, crisp green juice built on hydrating cucumber and celery. Apple and parsley round it out, with just a touch of lime for brightness.', ing:'Celery · Apple · Parsley · Cucumber · Lime'},
 ];
 const SHOTS = [
-  {id:'rise', name:'Rise', desc:'A warming shot made to support immune health and help you start your day strong.', ing:'Pineapple · Turmeric · Ginger · Black Pepper', price:5},
-  {id:'pulse', name:'Pulse', desc:'A powerful ginger kick with beet to support blood flow and fuel your pre-workout surge.', ing:'Beet · Lemon · Ginger', price:5},
+  {id:'rise', name:'Rise', badge:'Immunity', note:'Limited availability — Rise may be leaving the menu soon, so grab it while you can.', desc:'A warming shot made to support immune health and help you start your day strong.', ing:'Pineapple · Turmeric · Ginger · Black Pepper', price:5},
+  {id:'pulse', name:'Pulse', badge:'Pre-Workout', desc:'A powerful ginger kick with beet to support blood flow and fuel your pre-workout surge.', ing:'Beet · Lime · Ginger', price:5},
 ];
 const WATERS = [
-  {id:'essence1', name:'Essence No. 1', desc:'A hydration water infused with citrus and thyme, lightly sweetened with agave, with a pinch of salt for minerals.', ing:'Purified Water · Thyme · Orange · Lemon · Salt · Agave', price:5},
+  {id:'essence1', name:'Essence No. 1', badge:'Electrolytes', desc:'A hydration water infused with citrus and thyme, lightly sweetened with agave, with a pinch of salt for minerals.', ing:'Purified Water · Thyme · Orange · Lemon · Salt · Agave', price:5},
 ];
 const PACKAGES = {
   single:{label:'Single', count:1, price:8},
   three:{label:'3-Pack', count:3, price:24},
   five:{label:'5-Pack', count:5, price:38},
+  sample:{label:'Renewed Sample Pack (3 x 4oz)', count:3, price:8.25},
 };
 
+// Shot bundles: 4 for $18, 7 for $31, singles $5. Cheapest combo is applied automatically.
+function shotsCost(n){
+  const best=[0];
+  for(let i=1;i<=n;i++){
+    let c=best[i-1]+5;
+    if(i>=4) c=Math.min(c,best[i-4]+18);
+    if(i>=7) c=Math.min(c,best[i-7]+31);
+    best.push(c);
+  }
+  return best[n];
+}
+const money = n => '$'+(Math.round(n*100)%100===0 ? Math.round(n) : n.toFixed(2));
 const state = { pkg:null, juiceQty:{}, shotQty:{}, waterQty:{}, day:'Sunday @ 4:30 PM — Downtown Knoxville', pay:null };
 JUICES.forEach(j => state.juiceQty[j.id] = 0);
 SHOTS.forEach(s => state.shotQty[s.id] = 0);
@@ -732,11 +767,12 @@ SHOTS.forEach(s => {
   row.className = 'product';
   row.innerHTML = `
     <div class="product-top">
-      <span class="product-name">${s.name} Shot</span>
+      <span class="product-name">${s.name} Shot${s.badge ? '<span class="kid-badge">'+s.badge+'</span>' : ''}</span>
       <span class="product-price">$${s.price}</span>
     </div>
     <div class="product-ing">${s.ing}</div>
     <div class="product-desc">${s.desc}</div>
+    ${s.note ? '<div class="limited-note">'+s.note+'</div>' : ''}
     <div class="stepper">
       <button type="button" data-act="minus" data-id="${s.id}">−</button>
       <span class="qty" id="sqty-${s.id}">0</span>
@@ -760,7 +796,7 @@ WATERS.forEach(w => {
   row.className = 'product';
   row.innerHTML = `
     <div class="product-top">
-      <span class="product-name">${w.name}</span>
+      <span class="product-name">${w.name}${w.badge ? '<span class="kid-badge">'+w.badge+'</span>' : ''}</span>
       <span class="product-price">$${w.price}</span>
     </div>
     <div class="product-ing">${w.ing}</div>
@@ -794,7 +830,7 @@ function updateSummary(){
   const pkg = state.pkg ? PACKAGES[state.pkg] : null;
   const chosen = JUICES.reduce((s,j)=>s+state.juiceQty[j.id],0);
   const shotsCount = SHOTS.reduce((s,x)=>s+state.shotQty[x.id],0);
-  const shotsTotal = SHOTS.reduce((s,x)=>s+state.shotQty[x.id]*x.price,0);
+  const shotsTotal = shotsCost(SHOTS.reduce((s,x)=>s+state.shotQty[x.id],0));
   const watersCount = WATERS.reduce((s,x)=>s+state.waterQty[x.id],0);
   const watersTotal = WATERS.reduce((s,x)=>s+state.waterQty[x.id]*x.price,0);
   const pkgFilled = pkg && chosen === pkg.count;
@@ -802,7 +838,7 @@ function updateSummary(){
   document.getElementById('sumShots').textContent = shotsCount;
   document.getElementById('sumWaters').textContent = watersCount;
   const total = (pkgFilled ? pkg.price : 0) + shotsTotal + watersTotal;
-  document.getElementById('sumTotal').textContent = '$'+total;
+  document.getElementById('sumTotal').textContent = money(total);
   document.getElementById('completeBtn').disabled = !(pkgFilled || shotsCount>0 || watersCount>0);
 }
 updateSummary();
@@ -827,20 +863,21 @@ document.getElementById('completeBtn').addEventListener('click', async () => {
   if(ig) lines.push('IG: '+ig);
   lines.push('');
   if(pkgFilled){
-    lines.push(pkg.label+' ($'+pkg.price+')');
+    lines.push(pkg.label+' ('+money(pkg.price)+')');
     JUICES.forEach(j => { if(state.juiceQty[j.id]>0) lines.push('  '+state.juiceQty[j.id]+'x '+j.name); });
   }
-  SHOTS.forEach(s => { if(state.shotQty[s.id]>0) lines.push(state.shotQty[s.id]+'x '+s.name+' Shot — $'+(state.shotQty[s.id]*s.price)); });
+  SHOTS.forEach(s => { if(state.shotQty[s.id]>0) lines.push(state.shotQty[s.id]+'x '+s.name+' Shot'); });
+  { const sc=SHOTS.reduce((a,x)=>a+state.shotQty[x.id],0); if(sc>0) lines.push('Shots subtotal ('+sc+'): $'+shotsCost(sc)); }
   WATERS.forEach(w => { if(state.waterQty[w.id]>0) lines.push(state.waterQty[w.id]+'x '+w.name+' — $'+(state.waterQty[w.id]*w.price)); });
   lines.push('');
   lines.push('Pickup Day: '+(state.day || '[not selected]'));
   lines.push('Payment: '+(state.pay || '[not selected]'));
   if(notes) lines.push('Notes: '+notes);
   lines.push('');
-  const shotsTotal = SHOTS.reduce((s,x)=>s+state.shotQty[x.id]*x.price,0);
+  const shotsTotal = shotsCost(SHOTS.reduce((s,x)=>s+state.shotQty[x.id],0));
   const watersTotal = WATERS.reduce((s,x)=>s+state.waterQty[x.id]*x.price,0);
   const total = (pkgFilled ? pkg.price : 0) + shotsTotal + watersTotal;
-  lines.push('TOTAL: $'+total);
+  lines.push('TOTAL: '+money(total));
   const orderText = lines.join('\n');
 
   const btn = document.getElementById('completeBtn');
@@ -854,7 +891,7 @@ document.getElementById('completeBtn').addEventListener('click', async () => {
       body: new URLSearchParams({
         name, phone, instagram: ig,
         order: orderText,
-        total: '$'+total,
+        total: money(total),
         pickupDay: state.day || 'not selected',
         payment: state.pay || 'not selected',
         allergy: notes || '',
